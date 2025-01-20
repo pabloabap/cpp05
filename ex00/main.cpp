@@ -7,17 +7,19 @@
 #include <iostream>
 
 static void tryCatchRight( Bureaucrat  a );
+static void tryCatchValueConstructor( int grade );
 static void tryCatchTooLower( Bureaucrat  a );
 static void tryCatchTooHigh( Bureaucrat  a );
 static void tryCatchConstructor( Bureaucrat a );
 
 int main(void)
 {
-	//std::cout << RED << "HOLA\n" << GREEN << "HOLA\n" << YELLOW << "HOLA\n" << RESET << "HOLA\n" << std::endl;
 	Bureaucrat *a = new Bureaucrat();
 
 
 	tryCatchRight( *a );
+	tryCatchValueConstructor( -1 );
+	tryCatchValueConstructor( 151 );
 	a->setGrade( 150 );
 	tryCatchTooLower( *a );
 	a->setGrade( 1 );
@@ -51,6 +53,31 @@ static void tryCatchRight( Bureaucrat a )
 		std::cout << RED << "Grade too low: " << e.what() \
 			<< RESET << std::endl;
 	}
+}
+
+static void tryCatchValueConstructor( int grade )
+{
+	Bureaucrat *p = NULL;
+
+	try
+	{
+		std::cout << "-----------------------------\n" \
+			<< "Trying to create a Bureaucrat with grade " \
+			<< grade << "(out of range)." << std::endl;
+		p = new Bureaucrat(grade); 
+	}
+	catch (const Bureaucrat::GradeTooHighException& e)
+	{
+		std::cout << RED << "Grade too high: " << e.what() \
+			<< RESET << std::endl;
+	}	
+	catch (const Bureaucrat::GradeTooLowException& e)
+	{
+		std::cout << RED << "Grade too low: " << e.what() \
+			<< RESET << std::endl;
+	}
+	if ( p )
+		delete p;
 }
 
 static void tryCatchTooLower( Bureaucrat a )

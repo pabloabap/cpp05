@@ -12,20 +12,21 @@ class Bureaucrat
 {
 	private:
 		std::string const	_name;
-		unsigned int		_grade;
+		int			_grade;
 		
 
-		void			_checkRange( unsigned int grande );
+		void			_checkRange( int grande );
 	public:
 		Bureaucrat( void );
 		Bureaucrat( Bureaucrat const &b );
+		Bureaucrat( int grade );
 		~Bureaucrat( void );
 
 		Bureaucrat		&operator=( Bureaucrat const &b );
 
 		std::string const	getName( void ) const;
-		unsigned int		getGrade( void ) const;
-		void			setGrade( unsigned int grade );
+		int			getGrade( void ) const;
+		void			setGrade( int grade );
 
 		void			incrementGrade( void );
 		void			decrementGrade( void );

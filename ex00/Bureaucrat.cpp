@@ -7,6 +7,11 @@ Bureaucrat::Bureaucrat( Bureaucrat const &b ): _name(b._name), _grade(b._grade)
 	this->_checkRange( this->_grade );
 }
 
+Bureaucrat::Bureaucrat( int grade ): _name("random"), _grade(grade)
+{
+	this->_checkRange( this->_grade );
+}
+
 Bureaucrat::~Bureaucrat( void ){}
 
 Bureaucrat		&Bureaucrat::operator=( Bureaucrat const &b )
@@ -19,7 +24,7 @@ Bureaucrat		&Bureaucrat::operator=( Bureaucrat const &b )
 	return ( *this );
 }
 
-void			Bureaucrat::_checkRange( unsigned int grade )
+void			Bureaucrat::_checkRange( int grade )
 {
 	std::ostringstream	oss;
 
@@ -28,15 +33,9 @@ void			Bureaucrat::_checkRange( unsigned int grade )
 		oss.str() + " is out of range.";
 
 	if ( grade < 1 )
-	{
-		this->_grade = 1;
-		throw Bureaucrat::GradeTooHighException( str_grade + " Reseted to 1." );
-	}
+		throw Bureaucrat::GradeTooHighException( str_grade );
 	else if ( grade > 150 )
-	{
-		this->_grade = 150;
-		throw Bureaucrat::GradeTooLowException( str_grade + " Reseted to 150.");
-	}
+		throw Bureaucrat::GradeTooLowException( str_grade );
 }
 
 std::string const	Bureaucrat::getName( void ) const
@@ -44,12 +43,12 @@ std::string const	Bureaucrat::getName( void ) const
 	return ( this->_name );
 }
 
-unsigned int		Bureaucrat::getGrade( void ) const
+int		Bureaucrat::getGrade( void ) const
 {
 	return ( this->_grade );
 }
 
-void			Bureaucrat::setGrade( unsigned int grade )
+void			Bureaucrat::setGrade( int grade )
 {
 	this->_checkRange( grade );
 	this->_grade = grade;
