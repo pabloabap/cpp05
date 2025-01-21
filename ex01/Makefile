@@ -5,9 +5,13 @@ NAME		= Bureaucrat
 CPP		= c++
 CPP_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
-HEADERS		= Bureaucrat.hpp
+HEADERS		= Bureaucrat.hpp Form.hpp bureaucrat_tests.hpp form_tests.hpp
 
-SRC		= main.cpp Bureaucrat.cpp Form.cpp
+SRC		= main.cpp \
+		bureaucrat_tests.cpp \
+		form_tests.cpp \
+		Bureaucrat.cpp \
+		Form.cpp
 
 OBJ		= $(SRC:.cpp=.o)
 
@@ -28,6 +32,7 @@ fclean: clean
 re: fclean all
 
 do: $(NAME)
+	@clear
 	@./$(NAME)
 
 .PHONY: all clean fclean re

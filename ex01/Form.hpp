@@ -3,7 +3,7 @@
 #ifndef FORM_CLASS_HPP
 # define FORM_CLASS_HPP
 
-# define PURPLE "\033[0;38;5;14m"
+# define CYAN "\033[0;38;5;14m"
 # define RESET "\033[0m"
 # include <string>
 # include <iostream>
@@ -19,9 +19,11 @@ class Form
 		bool			_signed;
 		int const		_gradeToSign;
 		int const		_gradeToExecute;
+
+		void			_checkRange( void ) const;
 	public:
 		Form( void );
-		Form( std::string &name, int gradeToSign, int gradeToExecute );
+		Form( std::string const &name, int gradeToSign, int gradeToExecute );
 		Form( Form const &f );
 		~Form( void );
 
@@ -37,15 +39,16 @@ class Form
 			public:
 				GradeTooLowException( const std::string &msg);
 		};
-		std::string 		getName( void );
-		bool			getSigned( void );
-		int			getGradeToSign( void );
-		int			getGradeToExecute( void );
+		std::string const	&getName( void ) const;
+		bool const		&getSigned( void ) const;
+		int const		&getGradeToSign( void ) const;
+		int const		&getGradeToExecute( void ) const;
 
 		void		beSigned( Bureaucrat const &b );		
 				
 };
 
 std::ostream	&operator<<( std::ostream &o, Form *f );
+std::ostream	&operator<<( std::ostream &o, Form &f );
 
 #endif

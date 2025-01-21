@@ -3,6 +3,11 @@
 #ifndef BUREAUCRAT_CLASS_HPP
 # define BUREAUCRAT_CLASS_HPP
 
+# define RED	"\033[1;38;5;9m"
+# define GREEN	"\033[1;38;5;10m"
+# define YELLOW	"\033[1;38;5;11m"
+# define RESET	"\033[0m"
+
 # include <string>
 # include <iostream>
 # include <exception>

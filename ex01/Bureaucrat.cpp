@@ -1,3 +1,5 @@
+//CABECERA
+
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat( void ): _name("random"), _grade(150){}
@@ -33,9 +35,9 @@ void			Bureaucrat::_checkRange( int grade )
 		oss.str() + " is out of range.";
 
 	if ( grade < 1 )
-		throw Bureaucrat::GradeTooHighException( str_grade );
+		throw Bureaucrat::GradeTooHighException( "Grade too high: " + str_grade );
 	else if ( grade > 150 )
-		throw Bureaucrat::GradeTooLowException( str_grade );
+		throw Bureaucrat::GradeTooLowException( "Grade too low: " + str_grade );
 }
 
 std::string const	Bureaucrat::getName( void ) const
@@ -68,7 +70,21 @@ void			Bureaucrat::decrementGrade( void )
 
 void			Bureaucrat::signForm( Form &f)
 {
-	f.beSigned( *this );
+	bool	already_signed;
+
+	already_signed = f.getSigned();
+	
+	if ( true == already_signed )
+	{
+		std::cout << CYAN << this->_name << " couldn't sign " \
+			<< f.getName() << " because it is already signed." \
+			<< RESET << std::endl;
+	}
+	else
+	{
+		f.beSigned( *this );
+		std::cout << GREEN << this->_name << " signed " << f.getName() << RESET << std::endl;
+	}
 }	
 
 Bureaucrat::GradeTooHighException::GradeTooHighException( const std::string& msg ): std::out_of_range(msg){}
