@@ -33,9 +33,9 @@ void			Bureaucrat::_checkRange( int grade )
 		oss.str() + " is out of range.";
 
 	if ( grade < 1 )
-		throw Bureaucrat::GradeTooHighException( str_grade );
+		throw Bureaucrat::GradeTooHighException("Grade too high: " + str_grade );
 	else if ( grade > 150 )
-		throw Bureaucrat::GradeTooLowException( str_grade );
+		throw Bureaucrat::GradeTooLowException("Grade too low: " + str_grade );
 }
 
 std::string const	Bureaucrat::getName( void ) const

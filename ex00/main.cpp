@@ -43,16 +43,10 @@ static void tryCatchRight( Bureaucrat a )
 			a.decrementGrade();
 		std::cout << "BUREAUCRAT VALUES: " << a << std::endl; 
 	}
-	catch (const Bureaucrat::GradeTooHighException& e)
+	catch (const std::out_of_range &e)
 	{
-		std::cout << RED << "Grade too high: " << e.what() \
-			<< RESET << std::endl;
+		std::cout << RED << e.what() << RESET << std::endl;
 	}	
-	catch (const Bureaucrat::GradeTooLowException& e)
-	{
-		std::cout << RED << "Grade too low: " << e.what() \
-			<< RESET << std::endl;
-	}
 }
 
 static void tryCatchValueConstructor( int grade )
@@ -66,16 +60,10 @@ static void tryCatchValueConstructor( int grade )
 			<< grade << "(out of range)." << std::endl;
 		p = new Bureaucrat(grade); 
 	}
-	catch (const Bureaucrat::GradeTooHighException& e)
+	catch (const std::out_of_range &e)
 	{
-		std::cout << RED << "Grade too high: " << e.what() \
-			<< RESET << std::endl;
+		std::cout << RED << e.what() << RESET << std::endl;
 	}	
-	catch (const Bureaucrat::GradeTooLowException& e)
-	{
-		std::cout << RED << "Grade too low: " << e.what() \
-			<< RESET << std::endl;
-	}
 	if ( p )
 		delete p;
 }
@@ -84,20 +72,14 @@ static void tryCatchTooLower( Bureaucrat a )
 {
 	try
 	{
-		std::cout << "BUREAUCRAT VALUES: " << a \
-			<< "-----------------------------\n" \
+		std::cout << "-----------------------------\n" \
+			<< "BUREAUCRAT VALUES: " << a \
 			<< "-> Decrementing out of range" << std::endl;
 		a.decrementGrade();
 	}
-	catch (const Bureaucrat::GradeTooHighException& e)
+	catch (const std::out_of_range &e)
 	{
-		std::cout << RED << "Grade too high: " << e.what() \
-			<< RESET << std::endl;
-	}	
-	catch (const Bureaucrat::GradeTooLowException& e)
-	{
-		std::cout << RED << "Grade too low: " << e.what() \
-			<< RESET << std::endl;
+		std::cout << RED << e.what() << RESET << std::endl;
 	}	
 	std::cout << YELLOW << "BUREAUCRAT VALUES AFTER OPERATION: " << a << RESET
 			<< "-----------------------------\n" << std::endl;
@@ -107,20 +89,14 @@ static void tryCatchTooHigh( Bureaucrat a )
 {
 	try
 	{
-		std::cout << "BUREAUCRAT VALUES: " << a \
-			<< "-----------------------------\n" \
+		std::cout << "-----------------------------\n" \
+			<< "BUREAUCRAT VALUES: " << a \
 			<< "-> Incrementing out of range" << std::endl;
 		a.incrementGrade();
 	}
-	catch (const Bureaucrat::GradeTooHighException& e)
+	catch (const std::out_of_range &e)
 	{
-		std::cout << RED << "Grade too high: " << e.what() \
-			<< RESET << std::endl;
-	}	
-	catch (const Bureaucrat::GradeTooLowException& e)
-	{
-		std::cout << RED << "Grade too low: " << e.what() \
-			<< RESET << std::endl;
+		std::cout << RED << e.what() << RESET << std::endl;
 	}	
 	std::cout << YELLOW << "BUREAUCRAT VALUES AFTER OPERATION: " << a << RESET
 			<< "-----------------------------\n" << std::endl;
@@ -140,15 +116,9 @@ static void tryCatchConstructor( Bureaucrat a )
 		a.setGrade( 0 );
 		b = a;
 	}
-	catch (const Bureaucrat::GradeTooHighException& e)
+	catch (const std::out_of_range &e)
 	{
-		std::cout << RED << "Grade too high: " << e.what() \
-			<< RESET << std::endl;
-	}	
-	catch (const Bureaucrat::GradeTooLowException& e)
-	{
-		std::cout << RED << "Grade too low: " << e.what() \
-			<< RESET << std::endl;
+		std::cout << RED << e.what() << RESET << std::endl;
 	}	
 	std::cout << YELLOW << "BUREAUCRAT VALUES AFTER OPERATION: " << a << RESET
 			<< "-----------------------------\n" << std::endl;
