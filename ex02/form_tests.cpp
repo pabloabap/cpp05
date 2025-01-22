@@ -2,35 +2,74 @@
 
 #include "form_tests.hpp"
 
+static void operations( std::string burType, Bureaucrat b, ShrubberyCreationForm s, \
+	RobotomyRequestForm r, PresidentialPardonForm p );
+static void executeUnsigned( Bureaucrat top );
 
-/** Checking all Form functions work as expected
- * EXPECTED: Functions match attributes values. Exception trying to sign f2.
+/** Checking all AForm Derived classes work as expected and manage
+ * AForms with Bureaucrats of different hierarchy.
+ * EXPECTED: Exceptions on actions of bureaucrats of lower hierarchy level tan
+ * AForm level, successful operations in other cases.
  */
 
-void testFormFunctions( void )
+void testAFormDeriveds( void )
 {
-	std::cout << PINK << "*** testFormFunctions called *** " << RESET << std::endl;
+	ShrubberyCreationForm	s("S_TARGET");
+	RobotomyRequestForm	r("R_TARGET");
+	PresidentialPardonForm	p("P_TARGET");
+	Bureaucrat	top(1);
+	Bureaucrat	rob(70);
+	Bureaucrat	shr(140);
+	Bureaucrat	pll(150);
+
+	std::cout << PINK << "*** testAFormDeriveds called *** " << RESET << std::endl;
+	std::cout << "__________FORMS__________\n" << s << r << p 
+		<< "__________BUREAUCRATS__________\n" << top << rob \
+		<< shr << pll << std::endl;
+	
+	std::cout << "GET NAME - " << s.getName() << "\n"
+		<< "GET SIGNED - " << s.getSigned() << "\n"
+		<< "GET G2SIGN - " << s.getGradeToSign() << "\n"
+		<< "GET G2EXEC - " << s.getGradeToExecute() << "\n"
+		<< "GET GTARGET - " << s.getTarget() << std::endl;
+	operations("Top",  top, s, r, p );
+	operations("Rob", rob, s, r, p );
+	operations("Shr", shr, s, r, p );
+	operations("Pll", pll, s, r, p );
+	executeUnsigned( top );
+}
+
+static void operations( std::string burType, Bureaucrat b, ShrubberyCreationForm s, \
+	RobotomyRequestForm r, PresidentialPardonForm p )
+{
+	std::cout << PINK << "*** test" << burType
+		<< "Operations called *** " << RESET << std::endl;
 	try
 	{
-		Form		f;
-		Form		f2("FORM2", 10, 1);
-		Form		f3(f2);
-		Bureaucrat	b;
-		
-		std::cout << f << std::endl;
-		std::cout << b << std::endl;
-		
-		std::cout << "GET NAME - " << f.getName() << "\n"
-			<< "GET SIGNED - " << f.getSigned() << "\n"
-			<< "GET G2SIGN - " << f.getGradeToSign() << "\n"
-			<< "GET G2EXEC - " << f.getGradeToExecute() << std::endl;
-		f.beSigned( b );
-		std::cout << "GET SIGNED - " <<f.getSigned() << std::endl;
-		std::cout << f2 << std::endl;
-		f2 = f;
-		std::cout << f2 << std::endl;
-		std::cout << f3 << std::endl;
-		f2.beSigned( b );
+		b.signForm(s);
+		b.executeForm(s);
+	}
+	catch ( const std::out_of_range &e)
+	{
+		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
+	}
+
+	try
+	{
+		b.signForm(r);
+		b.executeForm(r);
+		b.executeForm(r);
+		b.executeForm(r);
+		b.executeForm(r);
+	}
+	catch ( const std::out_of_range &e)
+	{
+		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
+	}
+	try
+	{
+		b.signForm(p);
+		b.executeForm(p);
 	}
 	catch ( const std::out_of_range &e)
 	{
@@ -38,225 +77,17 @@ void testFormFunctions( void )
 	}
 }
 
-/** Default Bureaucrat and form in range and signs higher than Bureaucrat grade.
- * EXPECTED: Excepntion Form::GradeToLow
-*/
-void testRangeFormDefBur( void )
+static void executeUnsigned( Bureaucrat top )
 {
-	Bureaucrat	*a = new Bureaucrat( );
-	Form		*f = new Form("Confidential", 10, 5);
+	std::cout << PINK << "*** testExecuteUnsigned called *** " << RESET << std::endl;
+	ShrubberyCreationForm	a;
 	
-	std::cout << PINK << "*** testRangeFormDefBur called *** " << RESET << std::endl;
 	try
 	{
-		std::cout << "-----------------------------\n"
-			<< "INITIAL BUREAUCRAT VALUES: " << a << f 
-			<< "-----------------------------\n"
-			<< "Sign form " << std::endl;
-		a->signForm( *f );
-		std::cout << f << "Try to sign again" << std::endl;
-		a->signForm( *f );
-		
+		top.executeForm(a);
 	}
-	catch (const std::out_of_range &e)
+	catch ( const std::out_of_range &e)
 	{
 		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
-	}	
-	if ( a )
-		delete ( a );
-	if ( f )
-		delete ( f );
-}
-
-/** Sign grande higher than bureaucrat grade.
- * EXPECTED: Too low exception to sign.
-*/
-void testHighSign( void )
-{
-	Bureaucrat	*a = new Bureaucrat( );
-	Form		*f = new Form("Confidential", 10, 150);
-	
-	std::cout << PINK << "*** testHighSign called *** " << RESET << std::endl;
-	try
-	{
-		std::cout << "-----------------------------\n"
-			<< "INITIAL BUREAUCRAT VALUES: " << a << f 
-			<< "-----------------------------\n"
-			<< "Sign form " << std::endl;
-		a->signForm( *f );
-		std::cout << f << "Try to sign again" << std::endl;
-		a->signForm( *f );
-		
 	}
-	catch (const std::out_of_range &e)
-	{
-		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
-	}	
-	if ( a )
-		delete ( a );
-	if ( f )
-		delete ( f );
 }
-
-/** Execute grande higher than bureaucrat grade.
- * EXPECTED: Waring on sign seccond try.
-*/
-void testHighExec( void )
-{
-	Bureaucrat	*a = new Bureaucrat( );
-	Form		*f = new Form("Confidential", 150, 10);
-	
-	std::cout << PINK << "*** testHighExec called *** " << RESET << std::endl;
-	try
-	{
-		std::cout << "-----------------------------\n"
-			<< "INITIAL BUREAUCRAT VALUES: " << a << f 
-			<< "-----------------------------\n"
-			<< "Sign form " << std::endl;
-		a->signForm( *f );
-		std::cout << f << "Try to sign again" << std::endl;
-		a->signForm( *f );
-		
-	}
-	catch (const std::out_of_range &e)
-	{
-		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
-	}	
-	if ( a )
-		delete ( a );
-	if ( f )
-		delete ( f );
-}
-
-/** Sign grade out of range higher.
- * EXPECTED: Too hihg sign form exception.
-*/
-void	testSingTooHigher( void )
-{
-	Bureaucrat	*a = NULL;
-	Form		*f = NULL;
-
-	std::cout << PINK << "*** testSingTooHigher called *** " << RESET << std::endl;
-	try
-	{
-		a = new Bureaucrat();
-		f = new Form("OUT", 0, 150);
-	
-		std::cout << "-----------------------------\n"
-			<< "INITIAL BUREAUCRAT VALUES: " << a << f 
-			<< "-----------------------------\n"
-			<< "Sign form " << std::endl;
-		a->signForm( *f );
-		std::cout << f << "Try to sign again" << std::endl;
-		a->signForm( *f );
-		
-	}
-	catch (const std::out_of_range &e)
-	{
-		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
-	}	
-	if ( a )
-		delete ( a );
-	if ( f )
-		delete ( f );
-}
-
-/** Sign grade out of range lower.
- * EXPECTED: Too low sign form exception.
-*/
-void	testSingTooLower( void )
-{
-	Bureaucrat	*a = NULL;
-	Form		*f = NULL;
-
-	std::cout << PINK << "*** testSingTooLow called *** " << RESET << std::endl;
-	try
-	{
-		a = new Bureaucrat();
-		f = new Form("OUT", 160, 150);
-	
-		std::cout << "-----------------------------\n"
-			<< "INITIAL BUREAUCRAT VALUES: " << a << f 
-			<< "-----------------------------\n"
-			<< "Sign form " << std::endl;
-		a->signForm( *f );
-		std::cout << f << "Try to sign again" << std::endl;
-		a->signForm( *f );
-		
-	}
-	catch (const std::out_of_range &e)
-	{
-		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
-	}	
-	if ( a )
-		delete ( a );
-	if ( f )
-		delete ( f );
-}
-
-/** Exec grade out of range higher.
- * EXPECTED: Too hihg exec form exception.
-*/
-void	testExecTooHigher( void )
-{
-	Bureaucrat	*a = NULL;
-	Form		*f = NULL;
-
-	std::cout << PINK << "*** testExecTooHigher called *** " << RESET << std::endl;
-	try
-	{
-		a = new Bureaucrat();
-		f = new Form("OUT", 150, 0);
-	
-		std::cout << "-----------------------------\n"
-			<< "INITIAL BUREAUCRAT VALUES: " << a << f 
-			<< "-----------------------------\n"
-			<< "Sign form " << std::endl;
-		a->signForm( *f );
-		std::cout << f << "Try to sign again" << std::endl;
-		a->signForm( *f );
-		
-	}
-	catch (const std::out_of_range &e)
-	{
-		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
-	}	
-	if ( a )
-		delete ( a );
-	if ( f )
-		delete ( f );
-}
-
-/** Exec grade out of range lower.
- * EXPECTED: Too low exec form exception.
-*/
-void	testExecTooLower( void )
-{
-	Bureaucrat	*a = NULL;
-	Form		*f = NULL;
-
-	std::cout << PINK << "*** testSingTooLow called *** " << RESET << std::endl;
-	try
-	{
-		a = new Bureaucrat();
-		f = new Form("OUT", 150, 160);
-	
-		std::cout << "-----------------------------\n"
-			<< "INITIAL BUREAUCRAT VALUES: " << a << f 
-			<< "-----------------------------\n"
-			<< "Sign form " << std::endl;
-		a->signForm( *f );
-		std::cout << f << "Try to sign again" << std::endl;
-		a->signForm( *f );
-		
-	}
-	catch (const std::out_of_range &e)
-	{
-		std::cout << RED << "EXCEPTION: " << e.what() << RESET << std::endl;
-	}	
-	if ( a )
-		delete ( a );
-	if ( f )
-		delete ( f );
-}
-

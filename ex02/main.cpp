@@ -7,28 +7,15 @@
 #define RESET	"\033[0m"
 
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
-#include "bureaucrat_tests.hpp"
+#include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include "form_tests.hpp"
 #include <iostream>
 
 int main(void)
 {
-	testDefBurDefForm();
-	testRangeBurDefForm();
-	testTooLowBurDefForm();
-	testTooHighBurDefForm();
-	testSignableNotExec();
-	testSignableAndExec();
-	testExecButNotSign();
-
-	testFormFunctions();
-	testRangeFormDefBur();
-	testHighSign();
-	testHighExec();
-	testSingTooHigher();
-	testSingTooLower();
-	testExecTooHigher();
-	testExecTooLower();
+	testAFormDeriveds();
 	return ( 0 );
 }

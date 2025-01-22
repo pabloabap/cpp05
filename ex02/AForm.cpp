@@ -103,7 +103,7 @@ void		AForm::beSigned( Bureaucrat const &b )
 	}
 }
 
-std::ostream	&operator<<( std::ostream &o, AForm *f )
+std::ostream	&operator<<( std::ostream &o, AForm const *f )
 {
 	std::cout << "___FORM " << f->getName() << " INFORMATION___\n" \
 		<< "|- NAME: " << f->getName() << "\n" \
@@ -113,7 +113,7 @@ std::ostream	&operator<<( std::ostream &o, AForm *f )
 	return ( o );		
 }
 
-std::ostream	&operator<<( std::ostream &o, AForm &f )
+std::ostream	&operator<<( std::ostream &o, AForm const &f )
 {
 	std::cout << "___FORM " << f.getName() << " INFORMATION___\n" \
 		<< "|- NAME: " << f.getName() << "\n" \

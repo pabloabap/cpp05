@@ -5,13 +5,20 @@ NAME		= Bureaucrat
 CPP		= c++
 CPP_FLAGS	= -Wall -Wextra -Werror -std=c++98
 
-HEADERS		= Bureaucrat.hpp Form.hpp bureaucrat_tests.hpp form_tests.hpp
+HEADERS		= Bureaucrat.hpp \
+		AForm.hpp \
+		ShrubberyCreationForm.hpp \
+		RobotomyRequestForm.hpp \
+		PresidentialPardonForm.hpp \
+		form_tests.hpp
 
 SRC		= main.cpp \
-		bureaucrat_tests.cpp \
 		form_tests.cpp \
 		Bureaucrat.cpp \
-		Form.cpp
+		AForm.cpp \
+		ShrubberyCreationForm.cpp \
+		RobotomyRequestForm.cpp \
+		PresidentialPardonForm.cpp
 
 OBJ		= $(SRC:.cpp=.o)
 

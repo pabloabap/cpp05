@@ -7,7 +7,6 @@
 # include <iostream>
 # include <fstream>
 # include "AForm.hpp"
-# include "Bureaucrat.hpp"
 
 class AForm;
 
@@ -24,10 +23,10 @@ class ShrubberyCreationForm: public AForm
 		ShrubberyCreationForm	&operator=( ShrubberyCreationForm const &f );
 		
 		std::string const	&getTarget( void ) const;
-		void			execute( Bureaucrat const &executor );
+		void			execute( Bureaucrat const &executor ) const;
 };
 
-std::ostream	&operator<<( std::ostream &o, ShrubberyCreationForm *f )
-std::ostream	&operator<<( std::ostream &o, ShrubberyCreationForm &f )
+std::ostream	&operator<<( std::ostream &o, ShrubberyCreationForm *f );
+std::ostream	&operator<<( std::ostream &o, ShrubberyCreationForm &f );
 
 #endif

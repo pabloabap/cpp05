@@ -10,17 +10,10 @@
 # define RESET	"\033[0m"
 
 # include <iostream>
-# include "Bureaucrat.hpp"
-# include "Form.hpp"
+# include "ShrubberyCreationForm.hpp"
+# include "RobotomyRequestForm.hpp"
+# include "PresidentialPardonForm.hpp"
 
-void	testFormFunctions( void );
-void	testRangeFormDefBur( void );
-void	testHighSign( void );
-void	testHighExec( void );
-
-void	testSingTooHigher( void );
-void	testSingTooLower( void );
-void	testExecTooHigher( void );
-void	testExecTooLower( void );
+void testAFormDeriveds( void );
 
 #endif

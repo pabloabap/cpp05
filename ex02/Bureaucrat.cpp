@@ -68,7 +68,7 @@ void			Bureaucrat::decrementGrade( void )
 	this->_grade ++;
 }
 
-void			Bureaucrat::signForm( Form &f)
+void			Bureaucrat::signForm( AForm &f)
 {
 	bool	already_signed;
 
@@ -86,6 +86,11 @@ void			Bureaucrat::signForm( Form &f)
 		std::cout << GREEN << this->_name << " signed " << f.getName() << RESET << std::endl;
 	}
 }	
+
+void			Bureaucrat::executeForm ( AForm const &form )
+{
+	form.execute( *this );
+}
 
 Bureaucrat::GradeTooHighException::GradeTooHighException( const std::string& msg ): std::out_of_range(msg){}
 

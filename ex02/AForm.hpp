@@ -29,7 +29,6 @@ class AForm
 		virtual ~AForm( void );
 
 		AForm	&operator=( AForm const &f );
-		
 		class GradeTooHighException: public std::out_of_range
 		{
 			public:
@@ -49,7 +48,7 @@ class AForm
 		virtual	void		execute( Bureaucrat const &executor ) const = 0;
 };
 
-std::ostream	&operator<<( std::ostream &o, AForm *f );
-std::ostream	&operator<<( std::ostream &o, AForm &f );
+std::ostream	&operator<<( std::ostream &o, AForm const *f );
+std::ostream	&operator<<( std::ostream &o, AForm const &f );
 
 #endif

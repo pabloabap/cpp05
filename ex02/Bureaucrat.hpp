@@ -14,7 +14,7 @@
 # include <sstream>
 # include "AForm.hpp"
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -38,7 +38,8 @@ class Bureaucrat
 
 		void			incrementGrade( void );
 		void			decrementGrade( void );
-		void			signForm( Form &f);	
+		void			signForm( AForm &f);	
+		void			executeForm ( AForm const &form );
 
 		class			GradeTooHighException: public std::out_of_range
 		{
